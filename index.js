@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const googleTrends = require('google-trends-api')
 require('dotenv').config()
+
 var api_key = process.env.API_KEY;
 var domain = process.env.DOMAIN;
 var mailgun = require('mailgun-js')({apiKey: api_key, domain: domain});
@@ -20,15 +21,19 @@ searchResults.then(function(results){
 })
 
 function sendEmail(collectData){
-	var data = {
-	  from: 'Google Trend Results <lee@trend.results.org>',
-	  to: process.env.LEE,
-	  subject: 'Todays Collected Data',
-	  text: collectData
-	};
+var data = {
+  from: 'Google Trend Results <google@trend.results.org>',
+  to: process.env.LEE,
+  subject: 'Todays Google Trend Results',
+  text: collectData
+};
  
 	mailgun.messages().send(data, function (error, body) {
-	  console.log(body);
+		if(error){
+			console.error(error)
+		} else {
+			console.log(body);
+		}
 	});
 }
 
