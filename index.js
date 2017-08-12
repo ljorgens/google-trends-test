@@ -46,7 +46,7 @@ function parseJson(json){
 }
 
 app.get('/', function (req, res) {
-  res.send('Hello World!')
+  res.send('Reset service, you should recieve an email shortly')
 })
 
 app.listen(process.env.PORT || 8080, function () {
